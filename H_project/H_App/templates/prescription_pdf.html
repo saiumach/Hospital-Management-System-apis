@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prescription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            color: #333;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 20px;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .prescription-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .prescription-table th, .prescription-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .prescription-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .appointment-details {
+            margin-top: 20px;
+        }
+
+        .generated-at {
+            text-align: right;
+            font-style: italic;
+            margin-top: 30px;
+        }
+
+        .doctor-details {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prescription Details</h1>
+
+    <div class="appointment-details">
+        <h2>Appointment Details</h2>
+        <p><strong>Appointment ID:</strong> {{ appointment.appointment_id }}</p>
+        <p><strong>Slot:</strong> {{ appointment.slot }}</p>
+        <p><strong>Treatment Status:</strong> {{ appointment.treatment_status }}</p>
+        <p><strong>Appointment Date:</strong> {{ appointment.date }}</p>
+    </div>
+
+    <!-- PDF Generation Information -->
+    <div class="generated-at">
+        <p><strong>Generated at:</strong> {{ generated_at }}</p>
+    </div>
+
+    <!-- Patient Details -->
+    <div class="section">
+        <h2>Patient Information</h2>
+        <p><strong>Name:</strong> {{ patient.name }}</p>
+        <p><strong>Email:</strong> {{ patient.email }}</p>
+        <p><strong>Contact:</strong> {{ patient.contact_number }}</p>
+        <p><strong>Problem:</strong> {{ patient.problem }}</p>
+    </div>
+
+    <!-- Doctor Details -->
+    <div class="doctor-details">
+        <h2>Assigned Doctor</h2>
+        <p><strong>Doctor Name:</strong> {{ appointment.doctor.name }}</p>
+        <p><strong>Doctor Email:</strong> {{ appointment.doctor.email }}</p>
+        <p><strong>Specialization:</strong> {{ appointment.doctor.specialization }}</p>
+    </div>
+
+<!-- Prescription Details -->
+<div class="section">
+    <h2>Prescriptions</h2>
+
+    <!-- Table for Medicine -->
+    <table class="prescription-table">
+        <thead>
+            <tr>
+                <th>Medicine</th>
+                <th>Dosage</th>
+                <th>Instructions</th>
+                <th>Times</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prescription in prescriptions %}
+                {% for medicine in prescription.medicine_details.all %}
+                    <tr>
+                        <td>{{ medicine.medicine.name }}</td>
+                        <td>{{ prescription.dosage }}</td>
+                        <td>{{ prescription.instructions }}</td>
+                        <td>
+                            <ul>
+                                <li>Morning: {{ medicine.morning|yesno:"Yes,No" }}</li>
+                                <li>Afternoon: {{ medicine.afternoon|yesno:"Yes,No" }}</li>
+                                <li>Evening: {{ medicine.evening|yesno:"Yes,No" }}</li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+        
+    </table>
+    
+</div>
+
+
+
+    <!-- Appointment Details -->
+    
+</body>
+</html>

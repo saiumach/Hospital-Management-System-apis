@@ -3,7 +3,7 @@
 import os
 import sys
 
-
+# bkdbhfiu
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'H_project.settings')
